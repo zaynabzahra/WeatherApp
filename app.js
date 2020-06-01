@@ -1,4 +1,5 @@
 window.addEventListener('load', () => {
+
     let long;
     let lat;
 
@@ -31,29 +32,35 @@ window.addEventListener('load', () => {
 
                         console.log(data);
 
-                        const {temp} = data.current;
-                        const {description} = data.current.weather[0];
-                    
+                        const { temp } = data.current;
+                        const { description } = data.current.weather[0];
+
                         //Set DOM elements from API
                         locationTimezone.textContent = data.timezone;
                         temperatureDegree.textContent = temp;
                         temperatureDescription.textContent = description;
 
+                        //FORMULA FOR FARENHEIT
+                        let Farenheit = (temp * 1.8) + 32;
+
                         setIcons(data.current.weather[0].icon);
 
                         //Change temperature to Celcius/Farenheit
-                            temperatureSection.addEventListener('click', ()=>{
+                        temperatureSection.addEventListener('click', () => {
 
-                                if(temperatureSpan.textContent ==="F"){
+                            if (temperatureSpan.textContent === "F") {
 
-                                    temperatureSpan.textContent = "C";
-                                }
-                                else {
+                                temperatureSpan.textContent = "C";
+                                temperatureDegree.textContent = temp;
+     
+                            }
+                            else {
 
-                                    temperatureSpan.textContent = "F";
-                                }
-                            })
-                    
+                                temperatureSpan.textContent = "F";
+                                temperatureDegree.textContent = Math.floor(Farenheit);
+                            }
+                        })
+
                     })
 
             });
@@ -63,7 +70,7 @@ window.addEventListener('load', () => {
     function setIcons(iconCode) {
 
         var iconurl = "http://openweathermap.org/img/w/" + iconCode + ".png";
-        
+
         let image = document.getElementsByClassName("image1")[0];
 
         image.src = iconurl;
